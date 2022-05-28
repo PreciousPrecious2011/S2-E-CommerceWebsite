@@ -81,7 +81,7 @@ stage('build ') {
 
             steps {
                sh '''
-           docker build -t devopseasylearning2021/eric:$ImageTAG .
+           docker build -t devopseasylearning2021/duclair:$ImageTAG .
                '''
             }
         }
@@ -104,7 +104,7 @@ stage('build ') {
      stage('Docker push ') {
             steps {
                sh '''
-              docker push devopseasylearning2021/eric:$ImageTAG 
+              docker push devopseasylearning2021/duclair:$ImageTAG 
                 '''
             }
         }
@@ -116,7 +116,7 @@ stage('build ') {
             steps {
                sh '''
                docker rm -f $(docker ps -aq) || true
-               docker run -d --name deploy -p 8787:80 devopseasylearning2021/eric:$ImageTAG 
+               docker run -d --name deploy -p 1180:80 devopseasylearning2021duclair:$ImageTAG 
                curl ifconfig.co 
                 '''
             }
@@ -160,22 +160,22 @@ def notifyUpgrade(String buildResult, String whereAt) {
       case 'WARNING':
         slackSend(channel: channel,
                 color: "#439FE0",
-                message: "ODILIA: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}  Application ODILIA")
+                message: "Duclair: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}  Application duclair")
         break
     case 'STARTING':
       slackSend(channel: channel,
                 color: "good",
-                message: "DEV-ODILIA: Starting upgrade @ ${env.BUILD_URL} Application ODILIA")
+                message: "DEV-Duclair: Starting upgrade @ ${env.BUILD_URL} Application duclair")
       break
     default:
         slackSend(channel: channel,
                 color: "good",
-                message: "DEV-ODILIA: Upgrade completed successfully @ ${env.BUILD_URL}  Application ODILIA")
+                message: "DEV-Duclair: Upgrade completed successfully @ ${env.BUILD_URL}  Application duclair")
         break
     }
   } else {
     slackSend(channel: channel,
               color: "danger",
-              message: "DEV-ODILIA: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}  Application ODILIA")
+              message: "DEV-Duclair: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}  Application Duclair")
   }
 }
